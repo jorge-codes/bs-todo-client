@@ -1,6 +1,5 @@
 import './App.css';
 
-// import React, {useState} from 'react';
 import React from 'react';
 
 // Imported components:
@@ -9,19 +8,27 @@ import UserForm from './components/UserForm';
 import UserList from './components/UserList';
 
 class App extends React.Component {
-  state = {
-    users: []
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [],
+    }
   }
 
   componentDidMount() {
-    console.log('environment variables');
-    console.log(`api_url: ${process.env.REACT_APP_API_URL}`);
-    this.testEndpoint();
+    this.loadUsers();
   }
 
   testEndpoint = async () => {
     const res = await API.get("/test");
     console.log(res.data);
+  }
+
+  loadUsers = async () => {
+    const res = await API.get("/user");
+    const users = res.data;
+    this.setState({ users });
   }
 
   addNewUser = (user) => {
@@ -37,9 +44,9 @@ class App extends React.Component {
           </h1>
         </header>
 
-        <UserForm />
+        <UserForm addNewUser={this.addNewUser} />
 
-        <UserList />
+        <UserList users={this.state.users} />
       </div>
     );
   }
