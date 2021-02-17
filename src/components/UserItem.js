@@ -2,11 +2,14 @@ import React from 'react';
 
 class UserItem extends React.Component {
 
+
   render() {
+    const user = this.props.user;
+
     return(
       <tr className="align-middle">
         <td>
-          <span className="align-middle">Jessy Rocket</span>
+          <span className="align-middle">{user.name}</span>
         </td>
         <td className="mx-auto">
           <div className="text-center">

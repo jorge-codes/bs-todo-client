@@ -1,9 +1,10 @@
 // components/UserList.js
 import React from 'react';
 
-// import UserItem from './UserItem';
+import UserItem from './UserItem';
 
 class UserList extends React.Component {
+
 
   render() {
     return (
@@ -17,7 +18,11 @@ class UserList extends React.Component {
             </tr>
           </thead>
 
-          <tbody>{/* <UserItem /> */}</tbody>
+          <tbody>
+            {this.props.users.map((user) => (
+              <UserItem key={user.id} user={user} />
+            ))}
+          </tbody>
         </table>
       </section>
     );
