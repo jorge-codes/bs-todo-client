@@ -1,26 +1,34 @@
 import React from 'react';
 
 class UserItem extends React.Component {
-
-
   render() {
     const user = this.props.user;
+    console.log(user);
 
-    return(
-      <tr className="align-middle">
+    return (
+      <tr className='align-middle'>
         <td>
-          <span className="align-middle">{user.name}</span>
+          <span className='align-middle'>{user.name}</span>
         </td>
-        <td className="mx-auto">
-          <div className="text-center">
-            <div className="btn-group btn-group-sm">
-              <button className="btn btn-outline-secondary"><i className="fas fa-edit"></i></button>
-              <button className="btn btn-primary"><i className="fas fa-tasks"></i></button>
+        <td className='mx-auto'>
+          <div className='text-center'>
+            <div className='btn-group btn-group-sm'>
+              <button className='btn btn-outline-secondary'>
+                <i className='fas fa-edit'></i>
+              </button>
+              <button className='btn btn-primary'>
+                <i className='fas fa-tasks'></i>
+              </button>
             </div>
           </div>
         </td>
         <td>
-          <button className="btn btn-sm btn-danger"><i className="fas fa-trash"></i></button>
+          <button
+            onClick={() => this.props.deleteUser(user.id)}
+            className='btn btn-sm btn-danger'
+          >
+            <i className='fas fa-trash'></i>
+          </button>
         </td>
       </tr>
 
@@ -44,7 +52,6 @@ class UserItem extends React.Component {
       //     <button className="btn btn-sm btn-danger invisible"><i class="fas fa-trash"></i></button>
       //   </td>
       // </tr>
-
 
       // <tr className="align-middle">
       //   <td>
