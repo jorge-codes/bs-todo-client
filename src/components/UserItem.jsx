@@ -3,7 +3,6 @@ import React from 'react';
 class UserItem extends React.Component {
   render() {
     const user = this.props.user;
-    console.log(user);
 
     return (
       <tr className='align-middle'>

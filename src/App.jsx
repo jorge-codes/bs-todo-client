@@ -35,12 +35,19 @@ class App extends React.Component {
   };
 
   deleteUser = async (id) => {
-    console.log(`Deleting user id: ${id}...`);
-    const user = await API.delete(`/user/${id}`);
-    console.log('user to delete:');
-    console.log(user);
+    const res = await API.delete(`/user/${id}`);
+    const user = res.data;
     let users = { ...this.state.users };
-    delete users[id];
+    delete users[user.id];
+    this.setState({ users });
+  };
+
+  addUser = async (name) => {
+    const newUser = { name };
+    const res = await API.post(`/user`, newUser);
+    const user = res.data;
+    let users = { ...this.state.users };
+    users[`${user.id}`] = user;
     this.setState({ users });
   };
 
@@ -52,7 +59,7 @@ class App extends React.Component {
             <strong>TO-DO APP</strong>
           </h1>
         </header>
-        <UserForm addNewUser={this.addNewUser} />
+        <UserForm addUser={this.addUser} />
         <UserList users={this.state.users} deleteUser={this.deleteUser} />
       </div>
     );
