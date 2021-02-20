@@ -6,7 +6,7 @@ class UserForm extends React.Component {
 
   addUser = (event) => {
     event.preventDefault();
-    const name = this.nameRef.current.value.trim();
+    const name = this.nameRef.current.value;
     this.props.addUser(name);
     event.currentTarget.reset();
   };

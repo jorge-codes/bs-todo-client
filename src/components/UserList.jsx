@@ -25,6 +25,7 @@ class UserList extends React.Component {
                 index={key}
                 user={users[key]}
                 deleteUser={this.props.deleteUser}
+                updateUser={this.props.updateUser}
               />
             ))}
           </tbody>

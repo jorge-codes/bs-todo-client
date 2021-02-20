@@ -1,5 +1,4 @@
 import './App.css';
-
 import React from 'react';
 
 // Imported components:
@@ -21,6 +20,7 @@ class App extends React.Component {
 
   testEndpoint = async () => {
     const res = await API.get('/test');
+    console.log('testing endpoint...');
     console.log(res.data);
   };
 
@@ -43,8 +43,19 @@ class App extends React.Component {
   };
 
   addUser = async (name) => {
+    name = name.trim();
     const newUser = { name };
     const res = await API.post(`/user`, newUser);
+    const user = res.data;
+    let users = { ...this.state.users };
+    users[`${user.id}`] = user;
+    this.setState({ users });
+  };
+
+  updateUser = async (id, name) => {
+    name = name.trim();
+    const updatedUser = { name };
+    const res = await API.patch(`/user/${id}`, updatedUser);
     const user = res.data;
     let users = { ...this.state.users };
     users[`${user.id}`] = user;
@@ -60,7 +71,11 @@ class App extends React.Component {
           </h1>
         </header>
         <UserForm addUser={this.addUser} />
-        <UserList users={this.state.users} deleteUser={this.deleteUser} />
+        <UserList
+          users={this.state.users}
+          deleteUser={this.deleteUser}
+          updateUser={this.updateUser}
+        />
       </div>
     );
   }
