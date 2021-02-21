@@ -5,6 +5,8 @@ import React from 'react';
 import API from './api';
 import UserForm from './components/UserForm';
 import UserList from './components/UserList';
+import TaskForm from './components/TaskForm';
+import TaskList from './components/TaskList';
 
 class App extends React.Component {
   modalRef = React.createRef();
@@ -108,8 +110,6 @@ class App extends React.Component {
           showTasks={this.showTasks}
         />
 
-        <section className='container'></section>
-
         <div id='tasks-modal' className='modal' tabIndex='-1'>
           <div className='modal-dialog'>
             <div className='modal-content'>
@@ -123,53 +123,8 @@ class App extends React.Component {
               </div>
 
               <div className='modal-body'>
-                <table className='table table-hover'>
-                  <thead>
-                    <tr>
-                      <th className='col-md-1'></th>
-                      <th className='col-md-10'></th>
-                      <th className='col-md-1'></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className='align-center'>
-                      <td>
-                        <input type='checkbox' />
-                      </td>
-                      <td>
-                        <span>Oli</span>
-                      </td>
-                      <td>
-                        <button
-                          type='button'
-                          className='btn btn-sm btn-outline-secondary'
-                        >
-                          <i className='far fa-times-circle'></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr className='align-center'>
-                      <td></td>
-                      <td>
-                        <form>
-                          <div className='input-group input-group-sm mb3'>
-                            <input type='text' className='form-control' />
-                            <button
-                              type='reset'
-                              className='btn btn-outline-secondary'
-                            >
-                              <i className='far fa-times-circle'></i>
-                            </button>
-                            <button type='submit' className='btn btn-success'>
-                              <i className='fas fa-check'></i>
-                            </button>
-                          </div>
-                        </form>
-                      </td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
+                <TaskForm />
+                <TaskList />
               </div>
               {/* <div className='modal-footer'>
                 <p></p>
