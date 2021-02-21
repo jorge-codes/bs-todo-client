@@ -12,7 +12,7 @@ class UserList extends React.Component {
         <table className='table table-striped'>
           <thead>
             <tr>
-              <th className='col-md-8'>Name</th>
+              <th className='col-md-9'>Name</th>
               <th className='text-center col-md-2'>Actions</th>
               <th className='col-md-1'> </th>
             </tr>
@@ -26,6 +26,7 @@ class UserList extends React.Component {
                 user={users[key]}
                 deleteUser={this.props.deleteUser}
                 updateUser={this.props.updateUser}
+                showTasks={this.props.showTasks}
               />
             ))}
           </tbody>
