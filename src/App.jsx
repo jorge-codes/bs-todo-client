@@ -7,16 +7,22 @@ import UserForm from './components/UserForm';
 import UserList from './components/UserList';
 
 class App extends React.Component {
+  modalRef = React.createRef();
+  modal = null;
+
   constructor(props) {
     super(props);
     this.state = {
       users: {},
+      tasks: {},
     };
   }
 
   componentDidMount() {
     this.loadUsers();
   }
+
+  componentWillUnmount() {}
 
   testEndpoint = async () => {
     const res = await API.get('/test');
@@ -62,6 +68,30 @@ class App extends React.Component {
     this.setState({ users });
   };
 
+  showTasks = (userId) => {
+    console.log(`showTasks userId:${userId}`);
+  };
+
+  hideTasks = () => {
+    console.log(`hideTasks`);
+    this.setState({ isModalOpen: false });
+    this.clearTasks();
+  };
+
+  clearTasks = () => {
+    let tasks = { ...this.state.tasks };
+    tasks = {};
+    this.setState({ tasks });
+  };
+
+  loadTasks = async (userId) => {
+    // const res = await API.get(``)
+  };
+
+  updateTask = async (id, description) => {
+    console.log(`updateTask`);
+  };
+
   render() {
     return (
       <div className='App'>
@@ -75,7 +105,80 @@ class App extends React.Component {
           users={this.state.users}
           deleteUser={this.deleteUser}
           updateUser={this.updateUser}
+          showTasks={this.showTasks}
         />
+
+        <section className='container'></section>
+
+        <div id='tasks-modal' className='modal' tabIndex='-1'>
+          <div className='modal-dialog'>
+            <div className='modal-content'>
+              <div className='modal-header'>
+                <h3 className='modal-title'>User's Tasks</h3>
+                <button
+                  className='btn-close'
+                  type='button'
+                  data-bs-dismiss='modal'
+                ></button>
+              </div>
+
+              <div className='modal-body'>
+                <table className='table table-hover'>
+                  <thead>
+                    <tr>
+                      <th className='col-md-1'></th>
+                      <th className='col-md-10'></th>
+                      <th className='col-md-1'></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className='align-center'>
+                      <td>
+                        <input type='checkbox' />
+                      </td>
+                      <td>
+                        <span>Oli</span>
+                      </td>
+                      <td>
+                        <button
+                          type='button'
+                          className='btn btn-sm btn-outline-secondary'
+                        >
+                          <i className='far fa-times-circle'></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr className='align-center'>
+                      <td></td>
+                      <td>
+                        <form>
+                          <div className='input-group input-group-sm mb3'>
+                            <input type='text' className='form-control' />
+                            <button
+                              type='reset'
+                              className='btn btn-outline-secondary'
+                            >
+                              <i className='far fa-times-circle'></i>
+                            </button>
+                            <button type='submit' className='btn btn-success'>
+                              <i className='fas fa-check'></i>
+                            </button>
+                          </div>
+                        </form>
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              {/* <div className='modal-footer'>
+                <p></p>
+              </div> */}
+            </div>
+          </div>
+        </div>
+
+        {/* App closing div */}
       </div>
     );
   }

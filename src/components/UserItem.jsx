@@ -33,7 +33,16 @@ class UserItem extends React.Component {
               >
                 <i className='fas fa-edit'></i>
               </button>
-              <button className='btn btn-primary'>
+              <button
+                className='btn btn-primary'
+                type='button'
+                onClick={() => this.props.showTasks(user.id)}
+                // FIXME: this needs to be removed and leverage everything into the 'showTasks' function
+                // I was wasting so much time solving dependency hell via react-bootstrap so decided to not use it for now
+                data-bs-toggle='modal'
+                data-bs-target='#tasks-modal'
+                // **************************
+              >
                 <i className='fas fa-tasks'></i>
               </button>
             </div>
