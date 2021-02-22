@@ -25,8 +25,6 @@ class App extends React.Component {
     this.loadUsers();
   }
 
-  componentWillUnmount() {}
-
   testEndpoint = async () => {
     const res = await API.get('/test');
     console.log('testing endpoint...');
@@ -106,6 +104,14 @@ class App extends React.Component {
     this.setState({ tasks });
   };
 
+  deleteTask = async (id) => {
+    const res = await API.delete(`/task/${id}`);
+    const task = res.data;
+    const tasks = { ...this.state.tasks };
+    delete tasks[`${task.id}`];
+    this.setState({ tasks });
+  };
+
   updateTask = async (id, description) => {
     console.log(`updateTask`);
   };
@@ -143,7 +149,10 @@ class App extends React.Component {
                   addTask={this.addTask}
                   userId={this.state.currentUser}
                 />
-                <TaskList tasks={this.state.tasks} />
+                <TaskList
+                  deleteTask={this.deleteTask}
+                  tasks={this.state.tasks}
+                />
               </div>
               {/* <div className='modal-footer'>
                 <p></p>

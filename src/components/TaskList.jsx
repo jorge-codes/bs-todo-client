@@ -18,7 +18,11 @@ class TaskList extends React.Component {
         </thead>
         <tbody>
           {Object.keys(tasks).map((key) => (
-            <TaskItem key={key} task={tasks[key]} />
+            <TaskItem
+              key={key}
+              task={tasks[key]}
+              deleteTask={this.props.deleteTask}
+            />
           ))}
         </tbody>
       </table>
