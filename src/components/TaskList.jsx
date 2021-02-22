@@ -5,6 +5,8 @@ import TaskItem from './TaskItem';
 
 class TaskList extends React.Component {
   render() {
+    const tasks = this.props.tasks;
+
     return (
       <table className='table table-hover'>
         <thead>
@@ -15,7 +17,9 @@ class TaskList extends React.Component {
           </tr>
         </thead>
         <tbody>
-          <TaskItem />
+          {Object.keys(tasks).map((key) => (
+            <TaskItem key={key} task={tasks[key]} />
+          ))}
         </tbody>
       </table>
     );

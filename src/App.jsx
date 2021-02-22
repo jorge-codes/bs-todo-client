@@ -72,6 +72,7 @@ class App extends React.Component {
 
   showTasks = (userId) => {
     console.log(`showTasks userId:${userId}`);
+    this.loadTasks(userId);
   };
 
   hideTasks = () => {
@@ -81,13 +82,18 @@ class App extends React.Component {
   };
 
   clearTasks = () => {
-    let tasks = { ...this.state.tasks };
-    tasks = {};
-    this.setState({ tasks });
+    this.setState({ tasks: {} });
   };
 
   loadTasks = async (userId) => {
-    // const res = await API.get(``)
+    console.log(`Loading tasks from userId:${userId}`);
+    const res = await API.get(`/task/user/${userId}`);
+    const tasks = res.data.reduce((tasks, task) => {
+      tasks[`${task.id}`] = task;
+      return tasks;
+    }, {});
+    console.log(tasks);
+    this.setState({ tasks });
   };
 
   updateTask = async (id, description) => {
@@ -124,7 +130,7 @@ class App extends React.Component {
 
               <div className='modal-body'>
                 <TaskForm />
-                <TaskList />
+                <TaskList tasks={this.state.tasks} />
               </div>
               {/* <div className='modal-footer'>
                 <p></p>
