@@ -22,6 +22,7 @@ class TaskList extends React.Component {
               key={key}
               task={tasks[key]}
               deleteTask={this.props.deleteTask}
+              updateTask={this.props.updateTask}
             />
           ))}
         </tbody>

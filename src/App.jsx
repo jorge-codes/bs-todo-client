@@ -112,8 +112,16 @@ class App extends React.Component {
     this.setState({ tasks });
   };
 
-  updateTask = async (id, description) => {
-    console.log(`updateTask`);
+  updateTask = async (id, state, description) => {
+    console.log(`Updating task...`);
+    description = description.trim();
+    const updatedTask = { description, state };
+    const res = await API.patch(`/task/${id}`, updatedTask);
+    const task = res.data;
+    console.log(task);
+    let tasks = { ...this.state.tasks };
+    tasks[`${task.id}`] = task;
+    this.setState({ tasks });
   };
 
   render() {
@@ -151,6 +159,7 @@ class App extends React.Component {
                 />
                 <TaskList
                   deleteTask={this.deleteTask}
+                  updateTask={this.updateTask}
                   tasks={this.state.tasks}
                 />
               </div>

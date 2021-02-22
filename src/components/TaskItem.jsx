@@ -2,7 +2,9 @@
 import React from 'react';
 
 class TaskItem extends React.Component {
-  taskRef = React.createRef();
+  descriptionRef = React.createRef();
+  stateRef = React.createRef();
+
   state = {
     isWritable: false,
   };
@@ -11,9 +13,22 @@ class TaskItem extends React.Component {
     this.setState((prevState) => ({ isWritable: !prevState.isWritable }));
   };
 
-  updateTask = (event) => {
+  updateTask = (state, description) => {
+    const id = this.props.task.id;
+    this.props.updateTask(id, state, description);
+  };
+
+  updateState = (event) => {
+    const state = this.stateRef.current.checked ? 1 : 0;
+    const description = this.props.task.description;
+    this.updateTask(state, description);
+  };
+
+  updateDescription = (event) => {
     event.preventDefault();
-    // TODO: get values and call update function
+    const state = this.props.task.state;
+    const description = this.descriptionRef.current.value;
+    this.updateTask(state, description);
     this.toggle();
   };
 
@@ -21,10 +36,21 @@ class TaskItem extends React.Component {
     return (
       <tr className='align-center'>
         <td>
-          <input type='checkbox' />
+          <input
+            onClick={this.updateState}
+            ref={this.stateRef}
+            type='checkbox'
+            defaultChecked={task.state === 1 ? true : false}
+          />
         </td>
         <td onClick={this.toggle}>
-          <span>{task.description}</span>
+          {task.state === 1 ? (
+            <span>
+              <del>{task.description}</del>
+            </span>
+          ) : (
+            <span>{task.description}</span>
+          )}
         </td>
         <td>
           <button
@@ -46,10 +72,10 @@ class TaskItem extends React.Component {
       <tr className='align-center'>
         <td></td>
         <td>
-          <form onSubmit={this.updateTask}>
+          <form onSubmit={this.updateDescription}>
             <div className='input-group input-group-sm mb3'>
               <input
-                ref={this.taskRef}
+                ref={this.descriptionRef}
                 defaultValue={task.description}
                 type='text'
                 className='form-control'
@@ -74,8 +100,16 @@ class TaskItem extends React.Component {
 
   componentDidUpdate() {
     if (this.state.isWritable) {
-      this.taskRef.current.focus();
+      this.descriptionRef.current.focus();
     }
+  }
+
+  componentDidMount() {
+    console.log('TaskItem mounted');
+    console.log(this.props.task);
+    const isDone = this.props.task.value === 1 ? true : false;
+    console.log(`  isDone:${isDone}`);
+    this.setState({ isDone });
   }
 
   render() {
