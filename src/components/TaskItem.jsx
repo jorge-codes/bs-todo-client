@@ -27,7 +27,13 @@ class TaskItem extends React.Component {
           <span>{task.description}</span>
         </td>
         <td>
-          <button type='button' className='btn btn-sm btn-outline-secondary'>
+          <button
+            onClick={() => {
+              this.props.deleteTask(task.id);
+            }}
+            type='button'
+            className='btn btn-sm btn-outline-secondary'
+          >
             <i className='far fa-times-circle'></i>
           </button>
         </td>
