@@ -17,6 +17,7 @@ class App extends React.Component {
     this.state = {
       users: {},
       tasks: {},
+      currentUser: '',
     };
   }
 
@@ -71,12 +72,11 @@ class App extends React.Component {
   };
 
   showTasks = (userId) => {
-    console.log(`showTasks userId:${userId}`);
     this.loadTasks(userId);
+    //FIXME: Implement here showing the modal via JS
   };
 
   hideTasks = () => {
-    console.log(`hideTasks`);
     this.setState({ isModalOpen: false });
     this.clearTasks();
   };
@@ -86,13 +86,23 @@ class App extends React.Component {
   };
 
   loadTasks = async (userId) => {
-    console.log(`Loading tasks from userId:${userId}`);
     const res = await API.get(`/task/user/${userId}`);
     const tasks = res.data.reduce((tasks, task) => {
       tasks[`${task.id}`] = task;
       return tasks;
     }, {});
     console.log(tasks);
+    this.setState({ tasks, currentUser: userId });
+  };
+
+  addTask = async (userId, description) => {
+    description = description.trim();
+    const newTask = { userId, description };
+    console.log(newTask);
+    const res = await API.post(`/task`, newTask);
+    const task = res.data;
+    let tasks = { ...this.state.tasks };
+    tasks[`${task.id}`] = task;
     this.setState({ tasks });
   };
 
@@ -129,7 +139,10 @@ class App extends React.Component {
               </div>
 
               <div className='modal-body'>
-                <TaskForm />
+                <TaskForm
+                  addTask={this.addTask}
+                  userId={this.state.currentUser}
+                />
                 <TaskList tasks={this.state.tasks} />
               </div>
               {/* <div className='modal-footer'>

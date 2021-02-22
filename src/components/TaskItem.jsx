@@ -42,7 +42,12 @@ class TaskItem extends React.Component {
         <td>
           <form onSubmit={this.updateTask}>
             <div className='input-group input-group-sm mb3'>
-              <input ref={this.taskRef} type='text' className='form-control' />
+              <input
+                ref={this.taskRef}
+                defaultValue={task.description}
+                type='text'
+                className='form-control'
+              />
               <button
                 onClick={this.toggle}
                 type='reset'
