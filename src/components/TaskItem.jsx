@@ -24,7 +24,7 @@ class TaskItem extends React.Component {
           <input type='checkbox' />
         </td>
         <td onClick={this.toggle}>
-          <span>Oli</span>
+          <span>{task.description}</span>
         </td>
         <td>
           <button type='button' className='btn btn-sm btn-outline-secondary'>
@@ -68,10 +68,12 @@ class TaskItem extends React.Component {
   }
 
   render() {
+    const task = this.props.task;
+
     if (this.state.isWritable) {
-      return this.renderWritable();
+      return this.renderWritable(task);
     }
-    return this.renderNormal();
+    return this.renderNormal(task);
   }
 }
 
